@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.jddpainting.com/sitemap.xml
+
+# Disallow admin or private areas (if applicable in the future)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all image files
+Allow: /assets/img/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
