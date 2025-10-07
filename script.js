@@ -261,26 +261,55 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.innerHTML = '<i class="fas fa-spinner loading"></i> Enviando...';
         submitButton.disabled = true;
         
-        // Simulate form submission (replace with actual form handling)
+        // Get form data
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        
+        // Create email body
+        const emailBody = `
+Nuevo mensaje desde JDD PAINTING:
+
+Nombre: ${data.name}
+Email: ${data.email}
+Teléfono: ${data.phone}
+Servicio: ${data.service}
+Mensaje: ${data.message}
+
+Enviado desde: ${window.location.href}
+Fecha: ${new Date().toLocaleDateString('es-ES')}
+        `;
+        
+        // Create mailto link
+        const mailtoLink = `mailto:jonathan.moreno.17.20@gmail.com?subject=Solicitud de Cotización - JDD PAINTING&body=${encodeURIComponent(emailBody)}`;
+        
+        // Simulate form submission delay
         setTimeout(() => {
-            // Reset form
-            form.reset();
+            // Open email client
+            window.location.href = mailtoLink;
             
-            // Show success message
-            showNotification('¡Gracias! Tu mensaje ha sido enviado. Te contactaremos pronto.', 'success');
+            // Reset form after opening email
+            setTimeout(() => {
+                form.reset();
+                
+                // Show success message
+                showNotification('¡Gracias! Se ha abierto tu cliente de email. Por favor envía el mensaje.', 'success');
+                
+                // Reset button
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                
+                // Clear any error states
+                const errorFields = form.querySelectorAll('.error');
+                const errorMessages = form.querySelectorAll('.form__error');
+                
+                errorFields.forEach(field => field.classList.remove('error'));
+                errorMessages.forEach(msg => msg.textContent = '');
+            }, 1000);
             
-            // Reset button
-            submitButton.innerHTML = originalText;
-            submitButton.disabled = false;
-            
-            // Clear any error states
-            const errorFields = form.querySelectorAll('.error');
-            const errorMessages = form.querySelectorAll('.form__error');
-            
-            errorFields.forEach(field => field.classList.remove('error'));
-            errorMessages.forEach(msg => msg.textContent = '');
-            
-        }, 2000);
+        }, 1500);
     }
     
     initFormValidation();
@@ -395,6 +424,64 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     initAnimatedText();
+
+    // ===============================
+    // About Page Counter Animation
+    // ===============================
+    
+    function initAboutCounters() {
+        const counters = document.querySelectorAll('.stat-about__number');
+        if (counters.length === 0) return;
+        
+        let animatedCounters = false;
+        
+        const observerOptions = {
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !animatedCounters) {
+                    animatedCounters = true;
+                    animateAboutCounters();
+                }
+            });
+        }, observerOptions);
+        
+        const statsSection = document.querySelector('.stats-about');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+        
+        function animateAboutCounters() {
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-number'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    // Add + or % suffix based on content
+                    let suffix = '';
+                    const label = counter.parentElement.querySelector('.stat-about__label').textContent;
+                    if (label.includes('Proyectos') || label.includes('Clientes')) {
+                        suffix = '+';
+                    } else if (label.includes('%') || label.includes('Pinturas')) {
+                        suffix = '%';
+                    }
+                    
+                    counter.textContent = Math.floor(current) + suffix;
+                }, 25);
+            });
+        }
+    }
+    
+    initAboutCounters();
 
     // ===============================
     // Notification System
@@ -877,4 +964,395 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(whatsappStyles);
     document.body.appendChild(whatsappButton);
+
+    // Advanced Scroll Animations
+    // ===============================
+    
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('aos-animate');
+                
+                // Staggered animations for card grids
+                if (entry.target.classList.contains('services__grid')) {
+                    const cards = entry.target.querySelectorAll('.service__card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.animation = `slideInUp 0.6s ease forwards`;
+                            card.style.animationDelay = `${index * 0.1}s`;
+                        }, index * 100);
+                    });
+                }
+                
+                if (entry.target.classList.contains('gallery__grid')) {
+                    const items = entry.target.querySelectorAll('.gallery__item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.animation = `zoomIn 0.6s ease forwards`;
+                            item.style.animationDelay = `${index * 0.05}s`;
+                        }, index * 80);
+                    });
+                }
+                
+                if (entry.target.classList.contains('testimonials__grid')) {
+                    const testimonials = entry.target.querySelectorAll('.testimonial__card');
+                    testimonials.forEach((testimonial, index) => {
+                        setTimeout(() => {
+                            testimonial.style.animation = `fadeInLeft 0.6s ease forwards`;
+                            testimonial.style.animationDelay = `${index * 0.1}s`;
+                        }, index * 150);
+                    });
+                }
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Initialize scroll animations
+    const animatedSections = document.querySelectorAll('.services__grid, .gallery__grid, .testimonials__grid');
+    animatedSections.forEach(section => {
+        animationObserver.observe(section);
+    });
+
+    // ===============================
+    // Scroll Features Initialization
+    // ===============================
+    
+    // Initialize scroll features immediately to prevent flicker
+    const initializeScrollFeatures = () => {
+        // Create scroll indicator
+        if (!document.querySelector('.scroll-indicator')) {
+            const indicator = document.createElement('div');
+            indicator.className = 'scroll-indicator';
+            indicator.innerHTML = '<div class="scroll-progress"></div>';
+            document.body.appendChild(indicator);
+        }
+        
+        // Create back to top button
+        if (!document.querySelector('.back-to-top')) {
+            const backToTop = document.createElement('button');
+            backToTop.className = 'back-to-top';
+            backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            backToTop.setAttribute('aria-label', 'Volver arriba');
+            backToTop.setAttribute('title', 'Volver arriba');
+            
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            document.body.appendChild(backToTop);
+        }
+    };
+    
+    // Initialize immediately
+    initializeScrollFeatures();
+
+    // ===============================
+    // Smooth parallax effect for hero section
+    // ===============================
+    // ===============================
+    // NEW Simple Scroll Animations
+    // ===============================
+    
+    const createScrollAnimations = () => {
+        // Crear el observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Simplemente agregar la clase de animación
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        // Seleccionar todos los elementos a animar
+        const elementsToAnimate = document.querySelectorAll(
+            '.service__card, .gallery__item, .testimonial__card, .section__title, .section__subtitle, .faq__item'
+        );
+        
+        // Agregar clase inicial y observar
+        elementsToAnimate.forEach((el, index) => {
+            el.classList.add('fade-in');
+            el.style.animationDelay = `${index * 0.1}s`;
+            observer.observe(el);
+        });
+    };
+    
+    // Inicializar las animaciones
+    setTimeout(createScrollAnimations, 500);
+
+    // ===============================
+    // Counter Animation
+    // ===============================
+    
+    const initCounters = () => {
+        const counters = document.querySelectorAll('.counter, [data-counter]');
+        
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.textContent) || 100;
+                    let current = 0;
+                    const increment = target / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current);
+                        }
+                    }, 40);
+                    
+                    countObserver.unobserve(counter);
+                }
+            });
+        });
+        
+        counters.forEach(counter => countObserver.observe(counter));
+    };
+    
+    initCounters();
+
+    // ===============================
+    // Optimized scroll handler
+    // ===============================
+    let ticking = false;
+    
+    const handleScroll = () => {
+        const scrolled = window.pageYOffset;
+        
+        // Parallax effect for hero (only if hero exists)
+        const heroElements = document.querySelectorAll('.hero .container > *');
+        if (heroElements.length > 0) {
+            heroElements.forEach((element, index) => {
+                const rate = scrolled * -0.5 * (index + 1) * 0.1;
+                element.style.transform = `translateY(${rate}px)`;
+            });
+        }
+        
+        // Update scroll progress
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercentage = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
+        
+        const progressBar = document.querySelector('.scroll-progress');
+        if (progressBar) {
+            progressBar.style.width = Math.min(100, Math.max(0, scrollPercentage)) + '%';
+        }
+        
+        // Show/hide back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        if (backToTop) {
+            if (scrolled > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+        
+        ticking = false;
+    };
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(handleScroll);
+            ticking = true;
+        }
+    });
+    
+    // Initial call to set correct states
+    handleScroll();
+    
+    // ===============================
+    // Typewriter Animation
+    // ===============================
+    
+    const initTypewriterEffect = () => {
+        const typewriterElements = document.querySelectorAll('.typewriter, .hero__title .animated-text');
+        
+        const typewriterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startTypewriter(entry.target);
+                    typewriterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        typewriterElements.forEach(element => {
+            typewriterObserver.observe(element);
+        });
+    };
+    
+    const startTypewriter = (element) => {
+        const text = element.textContent;
+        element.textContent = '';
+        element.style.opacity = '1';
+        
+        let index = 0;
+        const timer = setInterval(() => {
+            element.textContent += text.charAt(index);
+            index++;
+            
+            if (index >= text.length) {
+                clearInterval(timer);
+            }
+        }, 50);
+    };
+    
+    // Inicializar efecto typewriter
+    initTypewriterEffect();
+
+    // ===============================
+    // Enhanced Smooth Scrolling
+    // ===============================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.offsetTop;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // ===============================
+    // Wave Effect on Buttons
+    // ===============================
+    
+    const initWaveEffects = () => {
+        const buttons = document.querySelectorAll('.btn, .cta__button');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const wave = document.createElement('div');
+                wave.classList.add('wave-effect');
+                
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                wave.style.width = wave.style.height = size + 'px';
+                wave.style.left = x + 'px';
+                wave.style.top = y + 'px';
+                
+                this.appendChild(wave);
+                
+                setTimeout(() => {
+                    wave.remove();
+                }, 600);
+            });
+        });
+    };
+    
+    // Inicializar efectos de onda
+    initWaveEffects();
 });
+
+// Simple CSS for animations
+const simpleAnimationCSS = document.createElement('style');
+simpleAnimationCSS.textContent = `
+    /* Simple fade in animation */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+    
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Service cards */
+    .service__card.fade-in {
+        transform: translateY(50px) scale(0.9);
+    }
+    
+    .service__card.fade-in.visible {
+        transform: translateY(0) scale(1);
+    }
+    
+    /* Gallery items */
+    .gallery__item.fade-in {
+        transform: scale(0.8);
+    }
+    
+    .gallery__item.fade-in.visible {
+        transform: scale(1);
+    }
+    
+    /* Testimonials */
+    .testimonial__card.fade-in {
+        transform: translateX(-50px);
+    }
+    
+    .testimonial__card.fade-in.visible {
+        transform: translateX(0);
+    }
+    
+    /* Titles */
+    .section__title.fade-in {
+        transform: translateY(-20px);
+    }
+    
+    .section__title.fade-in.visible {
+        transform: translateY(0);
+    }
+    
+    .back-to-top {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+`;
+document.head.appendChild(simpleAnimationCSS);
+
+// Estilos adicionales para efectos
+const scrollAnimationCSS = document.createElement('style');
+scrollAnimationCSS.textContent = `
+    .wave-effect {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: wave 0.6s linear;
+        pointer-events: none;
+    }
+    
+    @keyframes wave {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(scrollAnimationCSS);
