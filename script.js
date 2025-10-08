@@ -1,13 +1,15 @@
 /**
+ * ===============================
  * JDD PAINTING - JavaScript Functionality
  * Modern, clean interactions for the landing page
+ * ===============================
  */
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // ===============================
-    // Navigation & Header
+    // NAVIGATION & HEADER
     // ===============================
     
     const header = document.getElementById('header');
@@ -1030,23 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(indicator);
         }
         
-        // Create back to top button
-        if (!document.querySelector('.back-to-top')) {
-            const backToTop = document.createElement('button');
-            backToTop.className = 'back-to-top';
-            backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            backToTop.setAttribute('aria-label', 'Volver arriba');
-            backToTop.setAttribute('title', 'Volver arriba');
-            
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-            
-            document.body.appendChild(backToTop);
-        }
+        // Back to top button removed to avoid conflicts with WhatsApp button
     };
     
     // Initialize immediately
@@ -1150,15 +1136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             progressBar.style.width = Math.min(100, Math.max(0, scrollPercentage)) + '%';
         }
         
-        // Show/hide back to top button
-        const backToTop = document.querySelector('.back-to-top');
-        if (backToTop) {
-            if (scrolled > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        }
+        // Back to top button functionality removed
         
         ticking = false;
     };

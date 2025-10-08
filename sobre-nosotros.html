@@ -25,6 +25,9 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
     
+    <!-- About Page Custom Styles -->
+    <link rel="stylesheet" href="about-styles.css">
+    
     <!-- Schema Markup for About Page -->
     <script type="application/ld+json">
     {
@@ -61,6 +64,9 @@
     </script>
 </head>
 <body>
+    <!-- ===============================
+         HEADER & NAVIGATION
+         =============================== -->
     <!-- Header -->
     <header class="header" id="header">
         <nav class="nav container">
@@ -75,16 +81,16 @@
                         <a href="index.html" class="nav__link">Inicio</a>
                     </li>
                     <li class="nav__item">
-                        <a href="sobre-nosotros.html" class="nav__link active">Sobre Nosotros</a>
+                        <a href="#story" class="nav__link active">story</a>
                     </li>
                     <li class="nav__item">
-                        <a href="index.html#servicios" class="nav__link">Servicios</a>
+                        <a href="#mission-vision" class="nav__link">mision y vision</a>
                     </li>
                     <li class="nav__item">
-                        <a href="index.html#galeria" class="nav__link">Galería</a>
+                        <a href="#team" class="nav__link">team</a>
                     </li>
                     <li class="nav__item">
-                        <a href="index.html#contacto" class="nav__link">Contacto</a>
+                        <a href="#certifications" class="nav__link">certificados</a>
                     </li>
                 </ul>
                 
@@ -102,10 +108,16 @@
         </nav>
     </header>
 
+    <!-- ===============================
+         MAIN CONTENT
+         =============================== -->
     <!-- Main Content -->
     <main class="main">
+        <!-- ===============================
+             HERO ABOUT SECTION
+             =============================== -->
         <!-- Hero About Section -->
-        <section class="hero-about">
+        <section class="hero-about" id="hero-about">
             <div class="container">
                 <div class="hero-about__content">
                     <h1 class="hero-about__title">Sobre Nosotros</h1>
@@ -113,6 +125,10 @@
                         Más de 15 años transformando espacios con 
                         <span class="text-accent">pasión, calidad y compromiso ambiental</span>
                     </p>
+                    <a href="#story" class="scroll-btn">
+                        Sigue
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
                 </div>
                 <div class="hero-about__image">
                     <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Equipo de JDD PAINTING trabajando en proyecto" class="hero-about__img">
@@ -120,8 +136,11 @@
             </div>
         </section>
 
+        <!-- ===============================
+             OUR STORY SECTION
+             =============================== -->
         <!-- Our Story Section -->
-        <section class="story section">
+        <section class="story section" id="story">
             <div class="container">
                 <div class="story__container">
                     <div class="story__content">
@@ -179,8 +198,11 @@
             </div>
         </section>
 
+        <!-- ===============================
+             MISSION & VISION SECTION
+             =============================== -->
         <!-- Mission & Vision Section -->
-        <section class="mission-vision section">
+        <section class="mission-vision section" id="mission-vision">
             <div class="container">
                 <div class="mission-vision__grid">
                     <div class="mission-vision__card">
@@ -223,8 +245,11 @@
             </div>
         </section>
 
+        <!-- ===============================
+             TEAM SECTION
+             =============================== -->
         <!-- Team Section -->
-        <section class="team section">
+        <section class="team section" id="team">
             <div class="container">
                 <div class="section__header">
                     <h2 class="section__title">Nuestro Equipo</h2>
@@ -303,8 +328,11 @@
             </div>
         </section>
 
+        <!-- ===============================
+             STATS SECTION
+             =============================== -->
         <!-- Stats Section -->
-        <section class="stats-about section">
+        <section class="stats-about section" id="stats-about">
             <div class="container">
                 <div class="section__header">
                     <h2 class="section__title">Nuestros Logros</h2>
@@ -349,8 +377,11 @@
             </div>
         </section>
 
+        <!-- ===============================
+             CERTIFICATIONS SECTION
+             =============================== -->
         <!-- Certifications Section -->
-        <section class="certifications section">
+        <section class="certifications section" id="certifications">
             <div class="container">
                 <div class="section__header">
                     <h2 class="section__title">Certificaciones y Reconocimientos</h2>
@@ -403,6 +434,9 @@
             </div>
         </section>
 
+        <!-- ===============================
+             CTA SECTION
+             =============================== -->
         <!-- CTA Section -->
         <section class="cta-about section">
             <div class="container">
@@ -427,6 +461,9 @@
         </section>
     </main>
 
+    <!-- ===============================
+         FOOTER SECTION
+         =============================== -->
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -516,7 +553,11 @@
         </div>
     </footer>
 
+    <!-- ===============================
+         JAVASCRIPT
+         =============================== -->
     <!-- Scripts -->
     <script src="script.js"></script>
+    <script src="about-script.js"></script>
 </body>
 </html>
