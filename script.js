@@ -1334,3 +1334,48 @@ scrollAnimationCSS.textContent = `
     }
 `;
 document.head.appendChild(scrollAnimationCSS);
+
+// ===============================
+// ENHANCED HERO STATS ANIMATION
+// ===============================
+
+function animateCounters() {
+    const counters = document.querySelectorAll('.hero__stat-number[data-target]');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const steps = 60;
+        const increment = target / steps;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            if (target === 100) {
+                counter.textContent = Math.floor(current) + '%';
+            } else {
+                counter.textContent = Math.floor(current) + '+';
+            }
+        }, duration / steps);
+    });
+}
+
+// Start counter animation when hero is in view
+const heroSection = document.querySelector('.hero');
+if (heroSection) {
+    const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(animateCounters, 1000);
+                heroObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    heroObserver.observe(heroSection);
+}

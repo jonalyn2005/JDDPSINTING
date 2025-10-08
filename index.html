@@ -107,8 +107,20 @@
              =============================== -->
         <!-- Hero Section -->
         <section class="hero" id="hero">
+            <!-- Animated background elements -->
+            <div class="hero__bg-elements">
+                <div class="hero__bg-circle hero__bg-circle--1"></div>
+                <div class="hero__bg-circle hero__bg-circle--2"></div>
+                <div class="hero__bg-circle hero__bg-circle--3"></div>
+            </div>
+            
             <div class="hero__container container">
                 <div class="hero__content">
+                    <div class="hero__badge">
+                        <i class="fas fa-star"></i>
+                        <span>Líderes en Pintura Ecológica</span>
+                    </div>
+                    
                     <h1 class="hero__title">
                         Transformamos tus espacios con 
                         <span class="hero__title--accent hero__title--animated animated-gradient" 
@@ -123,30 +135,31 @@
                             Conoce nuestros servicios
                             <i class="fas fa-arrow-right"></i>
                         </a>
-                        <a href="#galeria" class="btn btn--secondary btn--large">
+                        <a href="#galeria" class="btn btn--secondary btn--large hero__btn-secondary">
                             Ver galería
                             <i class="fas fa-images"></i>
                         </a>
                     </div>
-                    
-                    <div class="hero__stats">
-                        <div class="hero__stat pulse-gold">
-                            <span class="hero__stat-number">500+</span>
-                            <span class="hero__stat-text">Proyectos completados</span>
-                        </div>
-                        <div class="hero__stat pulse-gold">
-                            <span class="hero__stat-number">15+</span>
-                            <span class="hero__stat-text">Años de experiencia</span>
-                        </div>
-                        <div class="hero__stat pulse-gold">
-                            <span class="hero__stat-number">100%</span>
-                            <span class="hero__stat-text">Pinturas ecológicas</span>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="hero__image">
-                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Profesional pintando una pared con pintura ecológica de alta calidad" class="hero__img">
+                    <div class="hero__image-container">
+                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Profesional pintando una pared con pintura ecológica de alta calidad" class="hero__img">
+                        
+                        <!-- Floating cards around image -->
+                        <div class="hero__floating-card hero__floating-card--1">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>15+ Años</span>
+                        </div>
+                        <div class="hero__floating-card hero__floating-card--2">
+                            <i class="fas fa-leaf"></i>
+                            <span>100% Eco</span>
+                        </div>
+                        <div class="hero__floating-card hero__floating-card--3">
+                            <i class="fas fa-trophy"></i>
+                            <span>500+ Proyectos</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -258,52 +271,54 @@
                     <button class="gallery__filter" data-filter="comercial">Comercial</button>
                 </div>
                 
-                <div class="gallery__grid">
-                    <div class="gallery__item" data-category="interior">
-                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Sala de estar con pintura interior ecológica en tonos neutros" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Sala de Estar Moderna</h4>
-                            <p class="gallery__description">Pintura interior con acabados mate</p>
+                <div class="gallery__container">
+                    <div class="gallery__grid">
+                        <div class="gallery__item" data-category="interior">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Sala de estar con pintura interior ecológica en tonos neutros" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Sala de Estar Moderna</h4>
+                                <p class="gallery__description">Pintura interior con acabados mate</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="gallery__item" data-category="exterior">
-                        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Fachada residencial pintada con pintura exterior resistente al clima" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Fachada Residencial</h4>
-                            <p class="gallery__description">Pintura exterior con protección UV</p>
+                        
+                        <div class="gallery__item" data-category="exterior">
+                            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Fachada residencial pintada con pintura exterior resistente al clima" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Fachada Residencial</h4>
+                                <p class="gallery__description">Pintura exterior con protección UV</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="gallery__item" data-category="comercial">
-                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Oficina corporativa con pintura comercial profesional" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Oficina Corporativa</h4>
-                            <p class="gallery__description">Pintura comercial especializada</p>
+                        
+                        <div class="gallery__item" data-category="comercial">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Oficina corporativa con pintura comercial profesional" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Oficina Corporativa</h4>
+                                <p class="gallery__description">Pintura comercial especializada</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="gallery__item" data-category="interior">
-                        <img src="https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Dormitorio principal con pintura ecológica en tonos cálidos" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Dormitorio Principal</h4>
-                            <p class="gallery__description">Pintura ecológica libre de VOCs</p>
+                        
+                        <div class="gallery__item" data-category="interior">
+                            <img src="https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Dormitorio principal con pintura ecológica en tonos cálidos" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Dormitorio Principal</h4>
+                                <p class="gallery__description">Pintura ecológica libre de VOCs</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="gallery__item" data-category="exterior">
-                        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Casa de dos plantas con pintura exterior duradera" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Residencia Familiar</h4>
-                            <p class="gallery__description">Pintura exterior de alta durabilidad</p>
+                        
+                        <div class="gallery__item" data-category="exterior">
+                            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Casa de dos plantas con pintura exterior duradera" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Residencia Familiar</h4>
+                                <p class="gallery__description">Pintura exterior de alta durabilidad</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="gallery__item" data-category="comercial">
-                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Restaurante con pintura comercial resistente y atractiva" class="gallery__img" loading="lazy">
-                        <div class="gallery__overlay">
-                            <h4 class="gallery__title">Restaurante</h4>
-                            <p class="gallery__description">Pintura comercial resistente</p>
+                        
+                        <div class="gallery__item" data-category="comercial">
+                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Restaurante con pintura comercial resistente y atractiva" class="gallery__img" loading="lazy">
+                            <div class="gallery__overlay">
+                                <h4 class="gallery__title">Restaurante</h4>
+                                <p class="gallery__description">Pintura comercial resistente</p>
+                            </div>
                         </div>
                     </div>
                 </div>
