@@ -54,10 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // NO section observers - only individual elements will animate
 
     // ===============================
-    // Progressive Timeline Loading
+    // Enhanced Progressive Timeline Loading
     // ===============================
     
     const timelineItems = document.querySelectorAll('.timeline__item');
+    const timelineMarkers = document.querySelectorAll('.timeline__marker');
     const cardObserverOptions = {
         threshold: 0.2,
         rootMargin: '0px 0px -30px 0px'
@@ -74,7 +75,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     entry.target.classList.add('visible');
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-                }, itemIndex * 150); // 150ms delay between items
+                    
+                    // Add special animation for the marker
+                    const marker = entry.target.querySelector('.timeline__marker');
+                    if (marker) {
+                        marker.style.animation = 'bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                    }
+                    
+                    // Add staggered animation for content
+                    const content = entry.target.querySelector('.timeline__content');
+                    if (content) {
+                        content.style.animation = entry.target.classList.contains('timeline__item--left') 
+                            ? 'slideInFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards' 
+                            : 'slideInFromRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                }, itemIndex * 200); // Increased delay for better visual effect
             }
         });
     }, cardObserverOptions);
@@ -83,6 +98,24 @@ document.addEventListener('DOMContentLoaded', function() {
     timelineItems.forEach(item => {
         timelineObserver.observe(item);
     });
+
+    // ===============================
+    // Timeline Line Animation
+    // ===============================
+    
+    const timeline = document.querySelector('.timeline');
+    if (timeline) {
+        const timelineLineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate the timeline line drawing
+                    timeline.style.setProperty('--line-animation', 'drawLine 2s ease-out forwards');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        timelineLineObserver.observe(timeline);
+    }
 
     // ===============================
     // Enhanced Card Animations

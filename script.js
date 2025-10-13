@@ -1379,3 +1379,133 @@ if (heroSection) {
     
     heroObserver.observe(heroSection);
 }
+
+// ===============================
+// CONTACT FORM FUNCTIONALITY
+// ===============================
+
+function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+
+    // Form validation
+    const validateForm = (formData) => {
+        const errors = {};
+        
+        // Name validation
+        if (!formData.get('name').trim()) {
+            errors.name = 'Full name is required';
+        }
+        
+        // Email validation
+        const email = formData.get('email').trim();
+        if (!email) {
+            errors.email = 'Email is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = 'Please enter a valid email address';
+        }
+        
+        // Phone validation
+        if (!formData.get('phone').trim()) {
+            errors.phone = 'Phone number is required';
+        }
+        
+        // Service validation
+        if (!formData.get('service')) {
+            errors.service = 'Please select a service type';
+        }
+        
+        return errors;
+    };
+
+    // Display error messages
+    const showErrors = (errors) => {
+        // Clear previous errors
+        document.querySelectorAll('.form__error').forEach(error => {
+            error.textContent = '';
+        });
+        
+        // Show new errors
+        Object.keys(errors).forEach(field => {
+            const errorElement = document.getElementById(`${field}-error`);
+            if (errorElement) {
+                errorElement.textContent = errors[field];
+            }
+        });
+    };
+
+    // Show success message
+    const showSuccess = (message) => {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'form__success';
+        successDiv.textContent = message;
+        contactForm.prepend(successDiv);
+        
+        // Remove success message after 5 seconds
+        setTimeout(() => {
+            successDiv.remove();
+        }, 5000);
+        
+        // Reset form
+        contactForm.reset();
+    };
+
+    // Show error message
+    const showError = (message) => {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'form__general-error';
+        errorDiv.textContent = message;
+        contactForm.prepend(errorDiv);
+        
+        // Remove error message after 5 seconds
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    };
+
+    // Handle form submission
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const errors = validateForm(formData);
+        
+        if (Object.keys(errors).length > 0) {
+            showErrors(errors);
+            return;
+        }
+        
+        // Clear errors
+        showErrors({});
+        
+        // Show loading state
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+        
+        try {
+            const response = await fetch('contact.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                showSuccess(result.success);
+            } else {
+                showError(result.error || 'An error occurred. Please try again.');
+            }
+        } catch (error) {
+            showError('Network error. Please check your connection and try again.');
+        } finally {
+            // Restore button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    });
+}
+
+// Initialize contact form
+initContactForm();
